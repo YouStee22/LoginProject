@@ -33,14 +33,13 @@
         #controls {
             margin-top: 20px;
         }
-       
-        
       
 
     </style>
 </head>
 <body>
-    <header>
+
+  <header>
 		<nav class="navbar navbar-dark bg-jumpers navbar-expand-lg">
 
 			<a class="navbar-brand" href="#"><img height="40" style="border-radius: 50%;" src="https://pnglib.nyc3.cdn.digitaloceanspaces.com/uploads/2021/02/login-png-royalty-free_60202203531a5.png" class="d-md-none mr-sm-2 align-middle"><span class="d-sm-none d-md-inline">Loggin</span></a>
@@ -50,15 +49,15 @@
 
 				</span>
 			</button>
-
+            
 			<div class="collapse navbar-collapse" id="mainmenu">
 				<ul class="navbar-nav mr-auto">
 
 					<li class="nav-item">
-						<a class="nav-link acitve" href="firstPage.html">Zarejestruj się</a>
+						<a class="nav-link active" href="firstPage.html">Zarejestruj się</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="#">Zaloguj się</a>
+					<li class="nav-item">
+						<a class="nav-link" href="login.html">Zaloguj się</a>
 					</li>
 
 				</ul>
@@ -66,45 +65,50 @@
 		</nav>
 	</header>
 
-
-
-<form method="post">
-    <div class="container">
-        <div class="row">
-
-            <div class="col-sm-12 col-md-4">
-                <h1>Sing in</h1>
-                <h6>Stay updated on your professional world!</h6>
-            </div>
-
-            <div class="col-sm-12 col-md-8">
-                <div class="col-sm-12 col-md-12">
-                    <input class="col-sm-9 col-md-10" name="email" type="email"
-                     placeholder="Email or Phone">
+      <form method="post">
+        <div class="container">
+            <div class="row">
+    
+                <div class="col-sm-12 col-md-4">
+                    <h1>Register</h1>
+                    <h6>Stay updated on your professional world!</h6>
                 </div>
-                <div class="col-sm-12 col-md-12">
-                    <input class="col-sm-9 col-md-10" name="password" type="password"
-                     placeholder="Password"><br>
-                    <span>Nie pamiętasz hasła?<a class="ml-1" href="#">Odzyskaj hasło</a></span>
-                </div>
-                <div class="col-sm-12 col-md-6" id="controls">
-                    <button class="btn btn-primary" type="submit">
-                        Zaloguj się</button>   
-                        <div>
+    
+                <div class="col-sm-12 col-md-8">
+                  <div class="col-sm-12 col-md-12">
+                      <input class="col-sm-9 col-md-10" name="firstname" type="text"
+                      placeholder="Name">
+                  </div>
+                  <div class="col-sm-12 col-md-12">
+                      <input class="col-sm-9 col-md-10" name="lastname" type="text"
+                      placeholder="Lastname">
+                  </div>
+                    <div class="col-sm-12 col-md-12">
+                        <input class="col-sm-9 col-md-10" name="email" type="email"
+                         placeholder="Email or Phone">
                     </div>
-                    <!-- <button class="btn btn-dark" type="submit">
-                        Zaloguj się z Apple</button>  -->
+                    <div class="col-sm-12 col-md-12">
+                        <input class="col-sm-9 col-md-10" name="password" type="password"
+                         placeholder="Password">
+                    </div>
+                    <div class="col-sm-12 col-md-6" id="controls">
+                        <button class="btn btn-primary" type="submit">
+                            Zarejestruj się</button>   
+                            <div>
+                        </div>
+                        <!-- <button class="btn btn-dark" type="submit">
+                            Zaloguj się z Apple</button>  -->
+                    </div>
                 </div>
             </div>
         </div>
+    </form>
+    
+    <div class="text-center mt-3">
+        Masz konto?
+        <a href="login.html">Zaloguj się</a>
     </div>
-</form>
-
-<div class="text-center mt-3">
-    Nie masz konta?
-    <a href="index.html">Zarejestruj się</a>
-</div>
-
+    
 
 
 
@@ -122,22 +126,22 @@
           const data = Object.fromEntries(formData);
           const dataOut = JSON.stringify(data);
 
-          console.log(formEl);
+          console.log(data);
 
-          fetch(`http://localhost:8080/getUsers`)
-                .then((response) => response.json())
-                .then((outData) => {
-                    for (let i = 0; i < outData.length; i++) {
-                        if (outData[i].email === data.email  &&  outData[i].password === data.password) {
-                            console.log('Logowanie udane')
-                            document.querySelector('.container').innerHTML = `Logowanie udane!`;
-                        } else {
-                            console.log("Błąd")
-                        }
-                    }
+          fetch(`http://localhost:8080/registerUser`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json'
+                    },
+                    body: dataOut
                 })
-                .catch((error) => console.log(error))
+                .then((response) => response.json())
+                .then((outData) => console.log(outData))
+                .catch((error) => console.log(error))   
+
+                window.location = "login.html";
         })
+
 
     </script>
 </body>
